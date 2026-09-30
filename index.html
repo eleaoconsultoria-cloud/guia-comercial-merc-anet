@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#123c35" />
+  <title>Guia do Comercial | Ações no Mercanet</title>
+  <style>
+    :root {
+      --green-900: #123c35;
+      --green-700: #17614f;
+      --green-100: #e8f3ed;
+      --ink: #1c2925;
+      --muted: #64716b;
+      --line: #dfe7e2;
+      --surface: #ffffff;
+      --background: #f5f8f6;
+      --amber: #fff4d8;
+      --amber-ink: #785414;
+      --red: #a7362c;
+      --shadow: 0 12px 34px rgba(18, 60, 53, .08);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--background);
+      line-height: 1.5;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .topbar {
+      background: var(--green-900);
+      color: white;
+      padding: 17px 24px;
+    }
+
+    .topbar-inner, main, .footer-inner {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 750;
+      letter-spacing: .01em;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: #d6eee0;
+      color: var(--green-900);
+      font-weight: 900;
+    }
+
+    main { padding: 34px 0 56px; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr .6fr;
+      align-items: center;
+      gap: 24px;
+      padding: 30px;
+      border-radius: 22px;
+      background: linear-gradient(120deg, #e4f2e9, #f5faf6);
+      border: 1px solid #d5e8dc;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--green-700);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 650px;
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      line-height: 1.1;
+      letter-spacing: -.04em;
+    }
+
+    .hero p { max-width: 620px; margin: 14px 0 0; color: #43534b; }
+
+    .hero-note {
+      padding: 17px;
+      border-radius: 15px;
+      background: white;
+      color: var(--green-900);
+      box-shadow: var(--shadow);
+      font-size: .92rem;
+    }
+
+    .hero-note strong { display: block; margin-bottom: 5px; }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 24px 0 20px;
+      padding-bottom: 9px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tab {
+      flex: 0 0 auto;
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .tab:hover, .tab.active { background: var(--green-100); color: var(--green-900); }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin: 28px 0 14px;
+    }
+
+    h2 { margin: 0; font-size: 1.4rem; letter-spacing: -.02em; }
+    h3 { margin: 0 0 8px; font-size: 1.04rem; }
+    .subtext { margin: 5px 0 0; color: var(--muted); }
+
+    .search-wrap { position: relative; width: min(100%, 430px); }
+    .search-wrap label { display: block; margin-bottom: 6px; font-size: .86rem; font-weight: 700; }
+
+    .search {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px 12px 40px;
+      outline: none;
+      background: white;
+    }
+
+    .search:focus { border-color: var(--green-700); box-shadow: 0 0 0 3px #17614f1a; }
+    .search-icon { position: absolute; left: 13px; bottom: 12px; color: var(--muted); }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .event-card, .card, .step-card, .status-card {
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--surface);
+      box-shadow: 0 4px 15px rgba(18, 60, 53, .035);
+    }
+
+    .event-card {
+      padding: 16px;
+      transition: border-color .15s, transform .15s;
+    }
+
+    .event-card:hover { border-color: #a6c9b4; transform: translateY(-1px); }
+    .event-card h3 { margin-bottom: 10px; }
+    .event-meta { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--green-100);
+      color: var(--green-900);
+      font-size: .76rem;
+      font-weight: 750;
+    }
+
+    .responsible { color: var(--muted); font-size: .85rem; }
+    .event-note { margin: 10px 0 0; color: var(--amber-ink); font-size: .82rem; }
+
+    .empty {
+      display: none;
+      padding: 20px;
+      border: 1px dashed #b9c9c0;
+      border-radius: 14px;
+      color: var(--muted);
+      text-align: center;
+      background: white;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .step-card { padding: 15px; }
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      background: var(--green-100);
+      color: var(--green-900);
+      font-weight: 850;
+    }
+    .step-card p { margin: 0; color: var(--muted); font-size: .88rem; }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 15px;
+    }
+
+    .card { padding: 20px; }
+    .card p { margin: 8px 0 0; color: #46554e; }
+    .card ul { margin: 10px 0 0; padding-left: 20px; color: #46554e; }
+    .card li + li { margin-top: 5px; }
+
+    .callout {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-left: 4px solid #d5a33b;
+      border-radius: 8px;
+      background: var(--amber);
+      color: var(--amber-ink);
+    }
+
+    .callout strong { display: block; margin-bottom: 3px; }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .status-card { padding: 16px; }
+    .status-card strong { color: var(--green-900); }
+    .status-card p { margin: 6px 0 0; color: var(--muted); }
+
+    .checklist { display: grid; gap: 9px; margin-top: 14px; }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+    }
+
+    .check-item input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--green-700); }
+    .check-item:has(input:checked) span { color: var(--muted); text-decoration: line-through; }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 12px 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .reset {
+      border: 0;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: #edf1ee;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .source {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    footer { padding: 18px 0; background: #eaf0ec; color: var(--muted); font-size: .82rem; }
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; padding: 23px; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .content-grid, .status-grid, .event-grid { grid-template-columns: 1fr; }
+      .section-heading { align-items: stretch; flex-direction: column; }
+      .search-wrap { width: 100%; }
+    }
+
+    @media (max-width: 420px) {
+      .steps { grid-template-columns: 1fr; }
+      .topbar { padding: 14px 0; }
+      main { padding-top: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>Guia do Comercial <span style="opacity:.75;font-weight:500">| Mercanet</span></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="main-title">
+      <div>
+        <p class="eyebrow">Verbas e Ações de Trade Marketing</p>
+        <h1 id="main-title">Abra sua ação com mais segurança.</h1>
+        <p>Encontre o evento adequado, siga os passos e confira o que falta antes de finalizar a atividade.</p>
+      </div>
+      <aside class="hero-note">
+        <strong>Importante</strong>
+        Este guia orienta o preenchimento. A abertura e o acompanhamento da ação acontecem no Mercanet.
+      </aside>
+    </section>
+
+    <nav class="tabs" aria-label="Seções do guia">
+      <button class="tab active" type="button" data-tab="eventos">Encontrar um evento</button>
+      <button class="tab" type="button" data-tab="passos">Como abrir uma ação</button>
+      <button class="tab" type="button" data-tab="acompanhar">Acompanhar</button>
+      <button class="tab" type="button" data-tab="checklist">Checklist final</button>
+    </nav>
+
+    <section class="panel active" id="eventos">
+      <div class="section-heading">
+        <div>
+          <h2>O que você precisa fazer?</h2>
+          <p class="subtext">Pesquise pela necessidade ou pelo nome do evento.</p>
+        </div>
+        <div class="search-wrap">
+          <label for="eventSearch">Buscar evento</label>
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input class="search" id="eventSearch" type="search" placeholder="Ex.: treinamento, uniforme, brindes..." />
+        </div>
+      </div>
+      <div class="event-grid" id="eventGrid"></div>
+      <div class="empty" id="emptyState">Nenhum evento encontrado. Revise os termos da busca.</div>
+      <div class="callout">
+        <strong>Confira antes de selecionar</strong>
+        A escolha do evento define quem analisa e aprova a ação. Evento incorreto pode causar atraso ou devolução.
+      </div>
+    </section>
+
+    <section class="panel" id="passos">
+      <h2>Como abrir uma ação</h2>
+      <p class="subtext">Siga a sequência. A ação só chega para análise depois de finalizada.</p>
+
+      <div class="steps">
+        <article class="step-card"><div class="step-number">1</div><h3>Escolha</h3><p>Acesse o menu e selecione o tipo e o evento adequados.</p></article>
+        <article class="step-card"><div class="step-number">2</div><h3>Preencha</h3><p>Abra “Detalhes da Solicitação” e confira os campos obrigatórios.</p></article>
+        <article class="step-card"><div class="step-number">3</div><h3>Anexe</h3><p>Inclua os documentos e informações da ação.</p></article>
+        <article class="step-card"><div class="step-number">4</div><h3>Justifique</h3><p>Explique a ação, o objetivo, o resultado, os benefícios e o valor.</p></article>
+        <article class="step-card"><div class="step-number">5</div><h3>Finalize</h3><p>Clique em “Finalizar Atividade” e salve.</p></article>
+      </div>
+
+      <div class="content-grid">
+        <article class="card">
+          <h3>1. Escolha o tipo e o evento</h3>
+          <p>No Mercanet, acesse <strong>Verbas e Ações de Trade Marketing</strong>. Selecione o tipo de ação e o evento correspondente à sua necessidade.</p>
+          <ul>
+            <li>Verbas e Ações de Relacionamento</li>
+            <li>Verbas e Ações Promocionais</li>
+            <li>Verbas e Ações Técnicas</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>2. Preencha os detalhes</h3>
+          <p>Na tela <strong>Detalhes da Solicitação</strong>, clique em <strong>Salvar</strong> antes de começar. Os campos obrigatórios aparecem em vermelho.</p>
+          <ul>
+            <li>Preencha todos os campos obrigatórios.</li>
+            <li>Anexe fotos, medidas, orçamento, layout e notas, conforme aplicável à ação.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>3. Justifique a ação</h3>
+          <p>Na aba <strong>Eventos e contrapartidas</strong>, descreva de forma objetiva:</p>
+          <ul>
+            <li>O que será feito e qual é o objetivo.</li>
+            <li>O resultado esperado e os benefícios para cliente e empresa.</li>
+            <li>O valor a ser investido.</li>
+          </ul>
+          <div class="callout">
+            <strong>Modelo de apoio</strong>
+            Apoio na realização de [ação], visando [objetivo], com resultado esperado de [resultado]. Benefício para o cliente: [benefício]. Benefício para a empresa: [benefício]. Valor a ser investido: R$ [valor].
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>4. Finalize a atividade</h3>
+          <p>Quando terminar, clique em <strong>Finalizar Atividade</strong> e salve para encaminhar a ação à próxima etapa.</p>
+          <div class="callout">
+            <strong>Atenção</strong>
+            Salvar sem finalizar não encaminha a ação para análise.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" id="acompanhar">
+      <h2>Como acompanhar sua ação</h2>
+      <p class="subtext">Consulte a situação no Mercanet usando o número da ação.</p>
+
+      <article class="card" style="margin-top:16px">
+        <h3>Caminho de consulta</h3>
+        <ol>
+          <li>Acesse <strong>(ODS) Solicitação de Verbas com Filtros</strong>.</li>
+          <li>Digite o número da ação no campo <strong>Código</strong>.</li>
+          <li>Clique em <strong>Pesquisar</strong>.</li>
+          <li>Confira o campo <strong>Situação</strong>.</li>
+        </ol>
+      </article>
+
+      <div class="status-grid">
+        <article class="status-card">
+          <strong>Revisão da Solicitação</strong>
+          <p>A ação voltou para ajustes. Corrija as informações e finalize novamente.</p>
+        </article>
+        <article class="status-card">
+          <strong>Executar Ação</strong>
+          <p>A ação foi aprovada e depende de você. Execute conforme o combinado.</p>
+        </article>
+      </div>
+      <p class="source">Para dúvidas sobre o evento ou o andamento, procure o responsável indicado no evento.</p>
+    </section>
+
+    <section class="panel" id="checklist">
+      <h2>Checklist antes de finalizar</h2>
+      <p class="subtext">Marque cada item conforme conferir. Seu progresso fica salvo neste navegador.</p>
+
+      <div class="progress-row">
+        <span id="progressText">0 de 7 itens concluídos</span>
+        <button class="reset" type="button" id="resetChecklist">Limpar checklist</button>
+      </div>
+      <div class="checklist" id="checklistItems">
+        <label class="check-item"><input type="checkbox" /><span>Acessei Verbas e Ações de Trade Marketing.</span></label>
+        <label class="check-item"><input type="checkbox" /><span>Escolhi o tipo de ação e o evento corretos.</span></label>
+        <label class="check-item"><input type="checkbox" /><span>Salvei e preenchi todos os campos obrigatórios em vermelho.</span></label>
+        <label class="check-item"><input type="checkbox" /><span>Anexei as informações necessárias: fotos, medidas, orçamento, layout e notas, conforme aplicável.</span></label>
+        <label class="check-item"><input type="checkbox" /><span>Justifiquei a ação, o objetivo, o resultado, os benefícios e o valor.</span></label>
+        <label class="check-item"><input type="checkbox" /><span>Cliquei em Finalizar Atividade e salvei.</span></label>
+        <label class="check-item"><input type="checkbox" /><span>Anotei o número da ação para acompanhamento.</span></label>
+      </div>
+    </section>
+
+    <div class="source">
+      <strong>Fonte:</strong> Manual Prático do Comercial — Como abrir uma ação no Mercanet.
+      Guia informativo; não substitui o sistema nem confirma o status de uma solicitação.
+      <br />
+      <strong>Validação pendente:</strong> o manual apresenta alguns eventos com o nome do evento também no campo “Tipo”. Essas classificações foram preservadas e sinalizadas abaixo.
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">Guia interno de apoio ao comercial • Conteúdo baseado no manual fornecido</div>
+  </footer>
+
+  <script>
+    const events = [
+      { need: "Fechar um acordo comercial de trade", event: "Acordo Comercial Trade", type: "Relacionamento", owner: "aptrade" },
+      { need: "Participar de uma rodada de negócios", event: "Participação em Rodada de Negócios", type: "Relacionamento", owner: "aptrade" },
+      { need: "Fazer campanha voltada ao consumidor", event: "Campanha Consumidor", type: "Promocionais", owner: "aptrade" },
+      { need: "Apoiar uniformes, fardamento ou jalecos do cliente", event: "Uniformes / Fardamento / Jalecos", type: "Promocionais", owner: "aptrade", note: "O manual orienta usar sempre este evento para uniformes." },
+      { need: "Fazer campanha para balconistas", event: "Campanhas de Balconista", type: "Promocionais", owner: "aptrade" },
+      { need: "Avaliar a expansão de mercado", event: "Análise de Expansão de Mercado", type: "Relacionamento", owner: "eleao" },
+      { need: "Solicitar amostra de produtos", event: "Solicitação de Amostra de Produtos", type: "Solicitação de Amostra de Produtos", owner: "cmmelo", note: "O campo “Tipo” repete o nome do evento no manual. Validar classificação." },
+      { need: "Levar o cliente para conhecer a fábrica", event: "Visita à Fábrica", type: "Relacionamento", owner: "cmmelo" },
+      { need: "Usar a verba gerencial regional", event: "Ação via Verba Gerencial Regional", type: "Relacionamento", owner: "cmmelo" },
+      { need: "Realizar um evento especial", event: "Eventos Especiais", type: "Relacionamento", owner: "cmmelo" },
+      { need: "Solicitar um treinamento", event: "Treinamento", type: "Técnicas", owner: "cmmelo" },
+      { need: "Solicitar treinamento ou palestra on-line", event: "Treinamento / Palestra - On-line", type: "Técnicas", owner: "cmmelo" },
+      { need: "Solicitar treinamento ou palestra E-Colors", event: "Treinamento / Palestra E-Colors", type: "Técnicas", owner: "cmmelo" },
+      { need: "Solicitar treinamento ministrado por técnico", event: "Treinamento / Palestra - Ministrada pelo Técnico", type: "Técnicas", owner: "cmmelo" },
+      { need: "Solicitar treinamento para influenciadores", event: "Treinamento Influencer", type: "Técnicas", owner: "amalinski" },
+      { need: "Solicitar catálogos", event: "Solicitação de Catálogos", type: "Solicitação de Catálogos", owner: "eduardom", note: "O campo “Tipo” repete o nome do evento no manual. Validar classificação." },
+      { need: "Solicitar placas comemorativas", event: "Placas Comemorativas", type: "Relacionamento", owner: "eduardom" },
+      { need: "Solicitar bloco Acqua Resist", event: "Solicitação Bloco Acqua Resist", type: "Promocionais", owner: "eduardom" },
+      { need: "Criar layout ou design gráfico, impresso ou digital", event: "Layout e Designers Gráficos Impressos e Digitais", type: "Relacionamento", owner: "eduardom" },
+      { need: "Revitalizar ou pintar o ponto de venda", event: "Revitalização e Pinturas", type: "Revitalização e Pinturas", owner: "jsuzuki", note: "O campo “Tipo” repete o nome do evento no manual. Validar classificação." },
+      { need: "Solicitar mobiliário", event: "Solicitação de Mobiliário", type: "Solicitação de Mobiliário", owner: "jsuzuki", note: "O campo “Tipo” repete o nome do evento no manual. Validar classificação." },
+      { need: "Fazer fachada ou ambientação", event: "Fachadas e Ambientações", type: "Relacionamento", owner: "jsuzuki" },
+      { need: "Enviar brindes em eventos com clientes", event: "Eventos com Clientes (Envio de Brindes) – Trade Marketing", type: "Relacionamento", owner: "jsuzuki" },
+      { need: "Dar brindes cooperados ao consumidor", event: "Brindes Cooperados para Consumidor", type: "Promocionais", owner: "jsuzuki" },
+      { need: "Realizar uma blitz", event: "Blitz", type: "Relacionamento", owner: "mhsilva" },
+      { need: "Tratar de embalagens vazias", event: "Embalagens Vazias", type: "Relacionamento", owner: "mhsilva" }
+    ];
+
+    const eventGrid = document.getElementById("eventGrid");
+    const search = document.getElementById("eventSearch");
+    const emptyState = document.getElementById("emptyState");
+
+    function renderEvents(query = "") {
+      const normalized = query.trim().toLocaleLowerCase("pt-BR");
+      const filtered = events.filter(item =>
+        `${item.need} ${item.event} ${item.type} ${item.owner}`
+          .toLocaleLowerCase("pt-BR")
+          .includes(normalized)
+      );
+
+      eventGrid.innerHTML = filtered.map(item => `
+        <article class="event-card">
+          <h3>${escapeHtml(item.need)}</h3>
+          <div class="event-meta">
+            <span class="pill">${escapeHtml(item.event)}</span>
+          </div>
+          <p class="responsible" style="margin:9px 0 0">
+            Tipo: ${escapeHtml(item.type)} · Responsável: <strong>${escapeHtml(item.owner)}</strong>
+          </p>
+          ${item.note ? `<p class="event-note">⚠ ${escapeHtml(item.note)}</p>` : ""}
+        </article>
+      `).join("");
+
+      emptyState.style.display = filtered.length ? "none" : "block";
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&", "<": "<", ">": ">", '"': "&quot;", "'": "&#039;"
+      })[char]);
+    }
+
+    search.addEventListener("input", event => renderEvents(event.target.value));
+    renderEvents();
+
+    document.querySelectorAll(".tab").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+        document.querySelectorAll(".panel").forEach(panel => panel.classList.remove("active"));
+        button.classList.add("active");
+        document.getElementById(button.dataset.tab).classList.add("active");
+      });
+    });
+
+    const checkboxes = [...document.querySelectorAll("#checklistItems input")];
+    const progressText = document.getElementById("progressText");
+    const storageKey = "guia-comercial-checklist-v1";
+
+    function updateChecklist() {
+      const done = checkboxes.filter(box => box.checked).length;
+      progressText.textContent = `${done} de ${checkboxes.length} itens concluídos`;
+      localStorage.setItem(storageKey, JSON.stringify(checkboxes.map(box => box.checked)));
+    }
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      checkboxes.forEach((box, index) => box.checked = Boolean(saved[index]));
+    } catch (_) {
+      localStorage.removeItem(storageKey);
+    }
+
+    checkboxes.forEach(box => box.addEventListener("change", updateChecklist));
+    updateChecklist();
+
+    document.getElementById("resetChecklist").addEventListener("click", () => {
+      checkboxes.forEach(box => box.checked = false);
+      updateChecklist();
+    });
+  </script>
+</body>
+</html>
